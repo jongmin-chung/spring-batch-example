@@ -27,6 +27,7 @@ public class ClaimItem {
     @JoinColumn(name = "claim_receipt_id", insertable = false, updatable = false)
     private ClaimReceipt claimReceipt;
 
+    @Column(name = "claim_receipt_id", insertable = false, updatable = false)
     private long claimReceiptId;
 
     public int getShippingCount() {

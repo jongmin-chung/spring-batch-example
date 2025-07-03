@@ -22,7 +22,7 @@ public class ClaimCompleteJpaExecutor implements ClaimCompleteExecutor {
 
         val updateReceipt = claimReceipt.toBuilder()
                 .id(claimId)
-                .completedAt(LocalDateTime.now())
+                .completeAt(LocalDateTime.now())
                 .claimStatus(ClaimStatus.COMPLETED)
                 .build();
 

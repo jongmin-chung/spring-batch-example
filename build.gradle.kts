@@ -38,6 +38,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
 
+    implementation("org.jspecify:jspecify:1.0.0")
+
     // QueryDSL
     implementation("io.github.openfeign.querydsl:querydsl-core:${querydsl}")
     implementation("io.github.openfeign.querydsl:querydsl-jpa:$querydsl")

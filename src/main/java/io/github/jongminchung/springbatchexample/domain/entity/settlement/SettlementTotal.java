@@ -3,10 +3,7 @@ package io.github.jongminchung.springbatchexample.domain.entity.settlement;
 import io.github.jongminchung.springbatchexample.domain.enums.SellType;
 import io.github.jongminchung.springbatchexample.domain.enums.TaxType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@Builder(toBuilder = true)
 @RequiredArgsConstructor
 public class SettlementTotal {
 

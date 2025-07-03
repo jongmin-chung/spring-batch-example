@@ -42,9 +42,9 @@ public class DeliveryCompletedItemReaderConfig {
                                     SELECT oi
                                     FROM OrderItem oi
                                         LEFT OUTER JOIN ClaimReceipt cr ON oi.id = cr.orderId
-                                    WHERE oi.shippedCompleteAt BETWEEN :startDateTime AND :endDateTime
+                                    WHERE oi.shipCompleteAt BETWEEN :startDateTime AND :endDateTime
                                         AND oi.purchaseConfirmAt IS NULL
-                                        AND (cr.orderId IS NULL or cr.completedAt IS NOT NULL)
+                                        AND (cr.orderId IS NULL or cr.completeAt IS NOT NULL)
                                     """
                             , OrderItem.class)
                     .setParameter("startDateTime", dateTimePair.getFirst())
