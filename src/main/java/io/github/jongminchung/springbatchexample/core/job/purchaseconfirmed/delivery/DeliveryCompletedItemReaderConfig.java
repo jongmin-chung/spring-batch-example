@@ -1,0 +1,73 @@
+package io.github.jongminchung.springbatchexample.core.job.purchaseconfirmed.delivery;
+
+import io.github.jongminchung.springbatchexample.domain.entity.order.OrderItem;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.batch.item.database.JpaPagingItemReader;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.batch.item.database.orm.AbstractJpaQueryProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.util.Pair;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+@Configuration
+public class DeliveryCompletedItemReaderConfig {
+
+    private static final int CHUNK_SIZE = 500;
+
+    @Bean
+    public JpaPagingItemReader<OrderItem> deliveryCompletedJpaItemReader(EntityManager entityManager) {
+        return new JpaPagingItemReaderBuilder<OrderItem>()
+                .name("deliveryCompletedJpaItemReader")
+                .entityManagerFactory(entityManager.getEntityManagerFactory())
+                .pageSize(CHUNK_SIZE)
+                .queryProvider(new DeliveryCompletedJpaQueryProvider(dateTimePair()))
+                .build();
+    }
+
+    @RequiredArgsConstructor
+    public static class DeliveryCompletedJpaQueryProvider extends AbstractJpaQueryProvider {
+        private final Pair<LocalDateTime, LocalDateTime> dateTimePair;
+
+        @Override
+        public Query createQuery() {
+            return this.getEntityManager().createQuery(
+                            """
+                                    SELECT oi
+                                    FROM OrderItem oi
+                                        LEFT OUTER JOIN ClaimReceipt cr ON oi.id = cr.orderId
+                                    WHERE oi.shippedCompleteAt BETWEEN :startDateTime AND :endDateTime
+                                        AND oi.purchaseConfirmAt IS NULL
+                                        AND (cr.orderId IS NULL or cr.completedAt IS NOT NULL)
+                                    """
+                            , OrderItem.class)
+                    .setParameter("startDateTime", dateTimePair.getFirst())
+                    .setParameter("endDateTime", dateTimePair.getSecond());
+        }
+
+        @Override
+        public void afterPropertiesSet() throws Exception {
+            throw new UnsupportedOperationException("TODO");
+        }
+    }
+
+    private static Pair<LocalDateTime, LocalDateTime> dateTimePair() {
+        val startDateTime = LocalDateTime.of(
+                LocalDate.now().minusDays(1),
+                LocalTime.MIN
+        );
+
+        val endDateTime = LocalDateTime.of(
+                LocalDate.now().plusDays(1),
+                LocalTime.MIN
+        );
+
+        return Pair.of(startDateTime, endDateTime);
+    }
+}

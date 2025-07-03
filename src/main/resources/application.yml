@@ -1,1 +1,12 @@
 spring.application.name: spring-batch-example
+
+spring.datasource:
+  url: jdbc:mysql://localhost:3306/spring_batch_example
+  username: root
+  password: root
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.jongminchung"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 
 java {
     toolchain {
@@ -23,17 +23,39 @@ repositories {
     mavenCentral()
 }
 
+
+val querydsl = "7.0"
+
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-batch")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-jooq")
+
+    runtimeOnly("com.mysql:mysql-connector-j")
+
     compileOnly("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+
+    // QueryDSL
+    implementation("io.github.openfeign.querydsl:querydsl-core:${querydsl}")
+    implementation("io.github.openfeign.querydsl:querydsl-jpa:$querydsl")
+    annotationProcessor("io.github.openfeign.querydsl:querydsl-apt:$querydsl:jpa")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.batch:spring-batch-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+sourceSets {
+    main {
+        java {
+            srcDirs("src/main/java", "${layout.buildDirectory}/generated")
+        }
+    }
 }
