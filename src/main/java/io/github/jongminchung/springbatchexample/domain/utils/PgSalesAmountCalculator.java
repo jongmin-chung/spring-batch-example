@@ -1,6 +1,6 @@
 package io.github.jongminchung.springbatchexample.domain.utils;
 
-import io.github.jongminchung.springbatchexample.domain.entity.order.OrderItemSnapshot;
+import io.github.jongminchung.springbatchexample.domain.command.PgSalesAmountMaterial;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class PgSalesAmountCalculator {
 
-    private final OrderItemSnapshot orderItemSnapshot;
+    private final PgSalesAmountMaterial pgSalesAmountMaterial;
 
     public BigDecimal getPgSalesAmount() {
-        return orderItemSnapshot.getSellPrice()
-                .subtract(orderItemSnapshot.getPromotionAmount())
-                .subtract(orderItemSnapshot.getMileageUsageAmount());
+        return pgSalesAmountMaterial.sellPrice()
+                .subtract(pgSalesAmountMaterial.promotionAmount())
+                .subtract(pgSalesAmountMaterial.mileageUsageAmount());
     }
 }

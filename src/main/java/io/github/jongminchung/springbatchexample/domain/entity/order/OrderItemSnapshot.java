@@ -5,6 +5,7 @@ import io.github.jongminchung.springbatchexample.domain.entity.Seller;
 import io.github.jongminchung.springbatchexample.domain.enums.TaxType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,4 +47,21 @@ public class OrderItemSnapshot {
 
     @Column(name ="product_id", insertable = false, updatable = false)
     private long productId;
+
+    @Builder(toBuilder = true)
+    public OrderItemSnapshot(BigDecimal defaultDeliveryAmount, long id, int itemCategory, BigDecimal mileageUsageAmount, Product product, long productId, BigDecimal promotionAmount, Seller seller, long sellerId, BigDecimal sellPrice, BigDecimal supplyPrice, int taxRate, TaxType taxType) {
+        this.defaultDeliveryAmount = defaultDeliveryAmount;
+        this.id = id;
+        this.itemCategory = itemCategory;
+        this.mileageUsageAmount = mileageUsageAmount;
+        this.product = product;
+        this.productId = productId;
+        this.promotionAmount = promotionAmount;
+        this.seller = seller;
+        this.sellerId = sellerId;
+        this.sellPrice = sellPrice;
+        this.supplyPrice = supplyPrice;
+        this.taxRate = taxRate;
+        this.taxType = taxType;
+    }
 }

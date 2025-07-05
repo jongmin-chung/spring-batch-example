@@ -1,5 +1,6 @@
 package io.github.jongminchung.springbatchexample.domain.utils;
 
+import io.github.jongminchung.springbatchexample.domain.command.PgSalesAmountMaterial;
 import io.github.jongminchung.springbatchexample.domain.entity.claim.ClaimItem;
 import io.github.jongminchung.springbatchexample.domain.entity.order.OrderItem;
 import io.github.jongminchung.springbatchexample.domain.entity.settlement.SettlementDaily;
@@ -26,7 +27,12 @@ public class NegativeDailySettlementCollection {
         val taxAmount = taxCalculator.getTaxAmount().multiply(count);
 
         // - 정산 금액에 필요한 데이터 만들기
-        val pgCalculator = new PgSalesAmountCalculator(orderItemSnapshot);
+        val pgSalesAmountMaterial = PgSalesAmountMaterial.builder()
+                .sellPrice(orderItemSnapshot.getSellPrice())
+                .promotionAmount(orderItemSnapshot.getPromotionAmount())
+                .mileageUsageAmount(orderItemSnapshot.getMileageUsageAmount())
+                .build();
+        val pgCalculator = new PgSalesAmountCalculator(pgSalesAmountMaterial);
         val pgSalesAmount = pgCalculator.getPgSalesAmount().multiply(count);
 
         // 수수료 금액 계산

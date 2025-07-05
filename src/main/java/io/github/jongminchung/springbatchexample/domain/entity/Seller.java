@@ -2,13 +2,13 @@ package io.github.jongminchung.springbatchexample.domain.entity;
 
 import io.github.jongminchung.springbatchexample.domain.enums.SellType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Getter
 @Entity
+@Builder(toBuilder = true)
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Seller extends BaseTimeEntity {
 
@@ -46,10 +46,12 @@ public class Seller extends BaseTimeEntity {
 
     @Column(name = "default_delivery_fee")
     @Comment("기본 배송 금액")
+    @Builder.Default
     private int defaultDeliveryFee = 3000;
 
     @Column(name = "commission")
     @Comment("수수료")
+    @Builder.Default
     private int commission = 5;
 
     @Getter

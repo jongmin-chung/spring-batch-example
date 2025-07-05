@@ -15,6 +15,7 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Builder.Default
     @Column(name = "order_item_id")
     private long id = 0L;
 
@@ -25,7 +26,9 @@ public class OrderItem {
     private int itemDeliveryStatus;
 
     @Comment("구매 확정일시")
+    @Builder.Default
     private LocalDateTime purchaseConfirmAt = null;
+    @Builder.Default
     private LocalDateTime shipCompleteAt = null;
 
     @OneToOne(fetch = FetchType.LAZY)

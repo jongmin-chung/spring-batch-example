@@ -2,15 +2,15 @@ package io.github.jongminchung.springbatchexample.domain.entity;
 
 import io.github.jongminchung.springbatchexample.domain.enums.TaxType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
 
 @Getter
 @Entity
+@Builder(toBuilder = true)
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
 
