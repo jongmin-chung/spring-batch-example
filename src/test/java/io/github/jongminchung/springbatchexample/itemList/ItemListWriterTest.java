@@ -35,7 +35,7 @@ class ItemListWriterTest {
     JobLauncher jobLauncher;
 
     @Autowired
-    @Qualifier("itemListJob")
+    @Qualifier(ItemListJobConfiguration.JOB_NAME)
     Job job;
 
     @Test
