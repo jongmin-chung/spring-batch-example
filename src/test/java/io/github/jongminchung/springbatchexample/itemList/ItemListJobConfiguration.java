@@ -11,22 +11,13 @@ import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-@EntityScan(basePackageClasses = {Item.class, ProcessedItem.class})
-@EnableJpaRepositories(basePackageClasses = {ItemRepository.class, ProcessedItemRepository.class})
-@EnableAutoConfiguration
-class TestConfiguration {
-}
 
 
 @Configuration

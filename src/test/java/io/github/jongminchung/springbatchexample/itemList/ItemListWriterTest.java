@@ -9,8 +9,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
@@ -18,15 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBatchTest
-@ContextConfiguration(classes = {TestConfiguration.class, ItemListJobConfiguration.class})
-//@SpringBootTest(properties = {
-//        "spring.batch.job.name=" + ItemListJobConfiguration.JOB_NAME,
-//        "spring.batch.jdbc.initialize-schema=always"
-//})
-@TestPropertySource(properties = {
-        "spring.batch.job.name=" + ItemListJobConfiguration.JOB_NAME,
-        "spring.batch.jdbc.initialize-schema=always"
-})
+@SpringBootTest(
+        properties = {
+            "spring.batch.job.name=" + ItemListJobConfiguration.JOB_NAME,
+            "spring.batch.jdbc.initialize-schema=always"
+        }
+)
 class ItemListWriterTest {
 
     @Autowired
